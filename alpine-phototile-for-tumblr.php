@@ -3,7 +3,7 @@
 Plugin Name: Alpine PhotoTile for Tumblr
 Plugin URI: http://thealpinepress.com/alpine-phototile-for-tumblr/
 Description: The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like.
-Version: 1.0.2
+Version: 1.0.2.1
 Author: the Alpine Press
 Author URI: http://thealpinepress.com/
 
@@ -32,14 +32,14 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 define( 'APTFTbyTAP_URL', WP_PLUGIN_URL.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_DIR', WP_PLUGIN_DIR.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_CACHE', WP_CONTENT_DIR . '/cache/' . basename(dirname(__FILE__)) . '' );
-define( 'APTFTbyTAP_VER', '1.0.2' );
+define( 'APTFTbyTAP_VER', '1.0.2.1' );
 define( 'APTFTbyTAP_DOMAIN', 'APTFTbyTAP_domain' );
 define( 'APTFTbyTAP_HOOK', 'APTFTbyTAP_hook' );
 define( 'APTFTbyTAP_INFO', 'http://thealpinepress.com/alpine-phototile-for-tumblr/' );
 
 register_deactivation_hook( __FILE__, 'TAP_PhotoTile_Tumblr_remove' );
 function TAP_PhotoTile_Tumblr_remove(){
-  $cache = new theAlpinePressSimpleCache();  
+  $cache = new theAlpinePressSimpleCacheV1();  
   $cache->setCacheDir( APTFTbyTAP_CACHE );
   $cache->clearAll();
 }
