@@ -1,0 +1,81 @@
+
+  .APTFTbyTAP-tumblr {
+    width:100%;
+    overflow:hidden;
+  }
+  .APTFTbyTAP-tumblr .form-table{
+    margin:0;
+  }
+  .APTFTbyTAP-tumblr .form-table th{
+    width:40%;
+    padding:10px 0;
+  }
+  .APTFTbyTAP-tumblr .form-table td{
+    padding:5px 0;
+  }
+  .APTFTbyTAP-tumblr option{
+    margin:5px;
+  }
+  .APTFTbyTAP-tumblr label{
+    margin-right:5px;
+  } 
+  .APTFTbyTAP-tumblr  textarea{
+    width:100%;
+  }
+  .APTFTbyTAP-tumblr input[type="text"]{
+    width:50%;
+  }
+  .APTFTbyTAP-tumblr .description{
+    width:100%;
+    text-align:center;
+  }  
+
+  .APTFTbyTAP-tumblr h4 {
+    margin: 0.5em 0;
+  }
+  .APTFTbyTAP-tumblr .top{
+    clear:both;
+    float:left;
+    width:100%;
+    padding:0 0 15px 0;
+    margin-bottom:10px;
+    border-bottom:1px solid #DDD;
+    position:relative;
+  }  
+  .APTFTbyTAP-tumblr .right, .APTFTbyTAP-tumblr .left{
+    width:48%;
+    position:relative;
+  }
+  .APTFTbyTAP-tumblr .right{
+    float:right;
+    clear:right;
+  }
+  .APTFTbyTAP-tumblr .left{
+    float:left;
+    clear:left;
+  }  
+  .APTFTbyTAP-tumblr .left input[type="text"]{
+    width:100%;
+  }
+  .APTFTbyTAP-tumblr .right input[type="text"]{
+    width:30%;
+  }
+  .APTFTbyTAP-tumblr .bottom input[type="text"] {
+    width:20%;
+  }
+  .APTFTbyTAP-tumblr .bottom{
+    float:left;
+    clear:both;
+    display:block;
+    width:100%;
+    height:auto;
+    padding:15px 0 10px 0;
+    margin-top:10px;
+    border-top:1px solid #DDD;
+    position:relative;
+  }    
+  .APTFTbyTAP-tumblr .bottom .description{
+    width:100%;
+    text-align:left;
+  }  
+
