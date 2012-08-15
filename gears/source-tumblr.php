@@ -19,15 +19,17 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
 
   $key = 'tumblr-'.$tumblr_options['tumblr_source'].'-'.$APTFTbyTAP_tumblr_uid.'-'.$APTFTbyTAP_tumblr_groupid.'-'.$APTFTbyTAP_tumblr_set.'-'.$APTFTbyTAP_tumblr_tags.'-'.$tumblr_options['tumblr_photo_number'].'-'.$tumblr_options['tumblr_photo_size'];
 
-  $cache = new theAlpinePressSimpleCacheV1();  
-  $cache->setCacheDir( APTFTbyTAP_CACHE );
-  
-  if( $cache->exists($key) ) {
-    $results = $cache->get($key);
-    $results = @unserialize($results);
-    if( count($results) ){
-      $results['hidden'] .= '<!-- Retrieved from cache -->';
-      return $results;
+  if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
+    $cache = new theAlpinePressSimpleCacheV1();  
+    $cache->setCacheDir( APTFTbyTAP_CACHE );
+    
+    if( $cache->exists($key) ) {
+      $results = $cache->get($key);
+      $results = @unserialize($results);
+      if( count($results) ){
+        $results['hidden'] .= '<!-- Retrieved from cache -->';
+        return $results;
+      }
     }
   }
   

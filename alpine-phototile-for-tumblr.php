@@ -3,7 +3,7 @@
 Plugin Name: Alpine PhotoTile for Tumblr
 Plugin URI: http://thealpinepress.com/alpine-phototile-for-tumblr/
 Description: The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like.
-Version: 1.0.2.1
+Version: 1.0.2.2
 Author: the Alpine Press
 Author URI: http://thealpinepress.com/
 
@@ -32,16 +32,18 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 define( 'APTFTbyTAP_URL', WP_PLUGIN_URL.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_DIR', WP_PLUGIN_DIR.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_CACHE', WP_CONTENT_DIR . '/cache/' . basename(dirname(__FILE__)) . '' );
-define( 'APTFTbyTAP_VER', '1.0.2.1' );
+define( 'APTFTbyTAP_VER', '1.0.2.2' );
 define( 'APTFTbyTAP_DOMAIN', 'APTFTbyTAP_domain' );
 define( 'APTFTbyTAP_HOOK', 'APTFTbyTAP_hook' );
 define( 'APTFTbyTAP_INFO', 'http://thealpinepress.com/alpine-phototile-for-tumblr/' );
 
 register_deactivation_hook( __FILE__, 'TAP_PhotoTile_Tumblr_remove' );
 function TAP_PhotoTile_Tumblr_remove(){
-  $cache = new theAlpinePressSimpleCacheV1();  
-  $cache->setCacheDir( APTFTbyTAP_CACHE );
-  $cache->clearAll();
+  if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
+    $cache = new theAlpinePressSimpleCacheV1();  
+    $cache->setCacheDir( APTFTbyTAP_CACHE );
+    $cache->clearAll();
+  }
 }
 
 // Register Widget
@@ -106,8 +108,12 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
     
 	function update( $newoptions, $oldoptions ) {
     $optiondetails = APTFTbyTAP_option_defaults();
-    foreach( $newoptions as $id=>$input ){
-      $options[$id] = theAlpinePressMenuOptionsValidateV1( $input,$oldoptions[$id],$optiondetails[$id] );
+    if ( function_exists( 'theAlpinePressMenuOptionsValidateV1' ) && APTFTbyTAP_CACHE ) {
+      foreach( $newoptions as $id=>$input ){
+        $options[$id] = theAlpinePressMenuOptionsValidateV1( $input,$oldoptions[$id],$optiondetails[$id] );
+      }
+    }else{
+      $options = $newoptions;
     }
     return $options;
 	}
@@ -140,9 +146,11 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
     add_action('admin_print_footer_scripts', 'APTFTbyTAP_menu_toggles');
     
     // Only admin can trigger two week cache cleaning
-    $cache = new theAlpinePressSimpleCacheV1();
-    $cache->setCacheDir( APTFTbyTAP_CACHE );
-    $cache->clean();
+    if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
+      $cache = new theAlpinePressSimpleCacheV1();
+      $cache->setCacheDir( APTFTbyTAP_CACHE );
+      $cache->clean();
+    }
 	}
   add_action('admin_enqueue_scripts', 'APTFTbyTAP_admin_head_script'); // admin_init so that it is ready when page loads
   
