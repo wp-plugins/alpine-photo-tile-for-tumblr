@@ -42,7 +42,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
   $APTFTbyTAP_photourl = array();
           
   // Determine image size id
-  $APTFTbyTAP_size_id = '.'; // Default is 500
+  $APTFTbyTAP_size_id = 2;
   switch ($tumblr_options['tumblr_photo_size']) {
     case 75:
       $APTFTbyTAP_size_id = 5;
@@ -116,7 +116,13 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
                 $APTFTbyTAP_linkurl[$i] = $post_url;
                 $APTFTbyTAP_photocap[$i] = $post_cap;
                 $APTFTbyTAP_photourl[$i] = $sizes[$APTFTbyTAP_size_id]->url;
+                if( !$sizes[5] && $sizes[$APTFTbyTAP_size_id-1]){
+                  $APTFTbyTAP_photourl[$i] = $sizes[$APTFTbyTAP_size_id-1]->url;
+                }
                 $APTFTbyTAP_originalurl[$i] = $sizes[1]->url;
+                if( !$APTFTbyTAP_photourl[$i] ){
+                  $APTFTbyTAP_photourl[$i] = $APTFTbyTAP_originalurl[$i];
+                }
                 $i++;
               }
             }
@@ -147,7 +153,25 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
   ///////////////////////////////////////////////////
 
   if ( $continue == false && function_exists('simplexml_load_file') ) {
-  
+    // Determine image size id
+    $APTFTbyTAP_size_id = 2;
+    switch ($tumblr_options['tumblr_photo_size']) {
+      case 75:
+        $APTFTbyTAP_size_id = 5;
+      break;
+      case 100:
+        $APTFTbyTAP_size_id = 4;
+      break;
+      case 250:
+        $APTFTbyTAP_size_id = 3;
+      break;
+      case 400:
+        $APTFTbyTAP_size_id = 2;
+      break;
+      case 500:
+        $APTFTbyTAP_size_id = 1;
+      break;
+    }  
     switch ($tumblr_options['tumblr_source']) {
     case 'user':
       $tumblr_uid = apply_filters( APTFTbyTAP_HOOK, empty($tumblr_options['tumblr_user_id']) ? '' : $tumblr_options['tumblr_user_id'], $tumblr_options );

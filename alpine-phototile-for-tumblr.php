@@ -3,7 +3,7 @@
 Plugin Name: Alpine PhotoTile for Tumblr
 Plugin URI: http://thealpinepress.com/alpine-phototile-for-tumblr/
 Description: The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like.
-Version: 1.0.2.2
+Version: 1.0.2.3
 Author: the Alpine Press
 Author URI: http://thealpinepress.com/
 
@@ -32,7 +32,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 define( 'APTFTbyTAP_URL', WP_PLUGIN_URL.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_DIR', WP_PLUGIN_DIR.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_CACHE', WP_CONTENT_DIR . '/cache/' . basename(dirname(__FILE__)) . '' );
-define( 'APTFTbyTAP_VER', '1.0.2.2' );
+define( 'APTFTbyTAP_VER', '1.0.2.3' );
 define( 'APTFTbyTAP_DOMAIN', 'APTFTbyTAP_domain' );
 define( 'APTFTbyTAP_HOOK', 'APTFTbyTAP_hook' );
 define( 'APTFTbyTAP_INFO', 'http://thealpinepress.com/alpine-phototile-for-tumblr/' );
@@ -59,8 +59,11 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
 	}
   
 	function widget( $args, $options ) {
+    wp_enqueue_script('APTFTbyTAP_tiles');
+    wp_enqueue_style('APTFTbyTAP_widget_css');
+    
 		extract($args);
-        
+
     // Set Important Widget Options    
     $id = $args["widget_id"];
     $defaults = APTFTbyTAP_option_defaults();
@@ -130,27 +133,34 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   // Load Admin JS and CSS
-	function APTFTbyTAP_admin_head_script(){ 
+	function APTFTbyTAP_admin_head_script($hook){ 
     // TODO - CREATE SEPERATE FUNCTIONS TO LOAD ADMIN PAGE AND WIDGET PAGE SCRIPTS
     wp_enqueue_script( 'jquery');
     // Replication Error caused by not loading new version of JS and CSS
     // Fix by always changing version number if changes were made
     wp_deregister_script('APTFTbyTAP_widget_menu');
     wp_register_script('APTFTbyTAP_widget_menu',APTFTbyTAP_URL.'/js/aptftbytap_widget_menu.js','',APTFTbyTAP_VER);
-    wp_enqueue_script('APTFTbyTAP_widget_menu');
-        
+    
     wp_deregister_style('APTFTbyTAP_admin_css');   
     wp_register_style('APTFTbyTAP_admin_css',APTFTbyTAP_URL.'/css/aptftbytap_admin_style.css','',APTFTbyTAP_VER);
+    
+    if( 'widgets.php' != $hook )
+      return;
+      
+    wp_enqueue_script( 'jquery');
+  
+    wp_enqueue_script('APTFTbyTAP_widget_menu');
+        
     wp_enqueue_style('APTFTbyTAP_admin_css');
-    
+
     add_action('admin_print_footer_scripts', 'APTFTbyTAP_menu_toggles');
-    
-    // Only admin can trigger two week cache cleaning
-    if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
-      $cache = new theAlpinePressSimpleCacheV1();
-      $cache->setCacheDir( APTFTbyTAP_CACHE );
-      $cache->clean();
-    }
+
+		// Only admin can trigger two week cache cleaning
+		if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
+		  $cache = new theAlpinePressSimpleCacheV1();
+		  $cache->setCacheDir( APTFTbyTAP_CACHE );
+		  $cache->clean();
+		}
 	}
   add_action('admin_enqueue_scripts', 'APTFTbyTAP_admin_head_script'); // admin_init so that it is ready when page loads
   
@@ -175,11 +185,11 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
     wp_enqueue_script( 'jquery' );
     
     wp_deregister_script('APTFTbyTAP_tiles');
-    wp_enqueue_script('APTFTbyTAP_tiles',APTFTbyTAP_URL.'/js/aptftbytap_tiles.js','',APTFTbyTAP_VER);
+    wp_register_script('APTFTbyTAP_tiles',APTFTbyTAP_URL.'/js/aptftbytap_tiles.js','',APTFTbyTAP_VER);
+    
     
     wp_deregister_style('APTFTbyTAP_widget_css'); // Since I wrote the scripts, deregistering and updating version are redundant in this case
     wp_register_style('APTFTbyTAP_widget_css',APTFTbyTAP_URL.'/css/aptftbytap_widget_style.css','',APTFTbyTAP_VER);
-    wp_enqueue_style('APTFTbyTAP_widget_css');
     
   }
   add_action('wp_enqueue_scripts', 'APTFTbyTAP_enqueue_display_scripts');
