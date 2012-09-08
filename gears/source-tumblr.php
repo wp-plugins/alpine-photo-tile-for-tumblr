@@ -28,7 +28,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
       $results = @unserialize($results);
       if( count($results) ){
         $results['hidden'] .= '<!-- Retrieved from cache -->';
-        //return $results;
+        return $results;
       }
     }
   }
