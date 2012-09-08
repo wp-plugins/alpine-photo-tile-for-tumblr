@@ -44,12 +44,13 @@ function APTFTbyTAP_display_vertical($id, $options, $source_results){
   $shadow = ($options['style_shadow']?'APTFTbyTAP-img-shadow':'APTFTbyTAP-img-noshadow');
   $border = ($options['style_border']?'APTFTbyTAP-img-border':'APTFTbyTAP-img-noborder');
   $curves = ($options['style_curve_corners']?'APTFTbyTAP-img-corners':'APTFTbyTAP-img-nocorners');
+  $highlight = ($options['style_highlight']?'APTFTbyTAP-img-highlight':'APTFTbyTAP-img-nohighlight');
   
   for($i = 0;$i<$options['tumblr_photo_number'];$i++){
     if( $options['tumblr_image_link'] ){ $output .= '<a href="' . $APTFTbyTAP_linkurl[$i] . '" class="APTFTbyTAP-vertical-link" target="_blank" title='."'". $APTFTbyTAP_photocap[$i] ."'".'>'; }
-    $output .= '<img id="'.$id.'-tile-'.$i.'" class="APTFTbyTAP-image '.$shadow.' '.$border.' '.$curves.'" src="' . $APTFTbyTAP_photourl[$i] . '" ';
+    $output .= '<img id="'.$id.'-tile-'.$i.'" class="APTFTbyTAP-image '.$shadow.' '.$border.' '.$curves.' '.$highlight.'" src="' . $APTFTbyTAP_photourl[$i] . '" ';
     $output .= 'title='."'". $APTFTbyTAP_photocap[$i] ."'".' alt='."'". $APTFTbyTAP_photocap[$i] ."' "; // Careful about caps with ""
-    $output .= 'border="0" hspace="0" vspace="0" />'; // Override the max-width set by theme
+    $output .= 'border="0" hspace="0" vspace="0" style="margin:1px 0 5px 0;padding:0;max-width:100%;"/>'; // Override the max-width set by theme
     if( $options['tumblr_image_link'] ){ $output .= '</a>'; }
   }
   
@@ -68,18 +69,23 @@ function APTFTbyTAP_display_vertical($id, $options, $source_results){
   // Close container
   $output .= '</div>';
   $output .= '<div class="APTFTbyTAP_breakline"></div>';
- 
-  echo $output;
   
-  if( $options['style_shadow'] || $options['style_border'] || $options['style_curve_corners'] ){
-    echo '<script>
-          jQuery(window).load(function() {
-            if( jQuery().APTFTbyTAPAdjustBordersPlugin ){
-              jQuery("#'.$id.'-vertical-parent").APTFTbyTAPAdjustBordersPlugin();
-            }
+  $highlight = APTFTbyTAP_get_option("general_highlight_color");
+  $highlight = ($highlight?$highlight:'#64a2d8');
+
+  if( $options['style_shadow'] || $options['style_border'] || $options['style_highlight'] ){
+    $output .= '<script>
+         jQuery(window).load(function() {
+            if(jQuery().APTFTbyTAPAdjustBordersPlugin ){
+              jQuery("#'.$id.'-vertical-parent").APTFTbyTAPAdjustBordersPlugin({
+                highlight:"'.$highlight.'",
+              });
+            }  
           });
         </script>';  
   }
+    
+  return $output;
 }  
 
 function APTFTbyTAP_display_cascade($id, $options, $source_results){
@@ -120,17 +126,19 @@ function APTFTbyTAP_display_cascade($id, $options, $source_results){
   $shadow = ($options['style_shadow']?'APTFTbyTAP-img-shadow':'APTFTbyTAP-img-noshadow');
   $border = ($options['style_border']?'APTFTbyTAP-img-border':'APTFTbyTAP-img-noborder');
   $curves = ($options['style_curve_corners']?'APTFTbyTAP-img-corners':'APTFTbyTAP-img-nocorners'); 
-   
+  $highlight = ($options['style_highlight']?'APTFTbyTAP-img-highlight':'APTFTbyTAP-img-nohighlight');
+  
   for($col = 0; $col<$options['style_column_number'];$col++){
-    $output .= '<div class="APTFTbyTAP_cascade_column" style="width:'.(100/$options['style_column_number']- 1 - 1/$options['style_column_number']).'%;float:left;margin:0 0 0 1%;">';
+    $output .= '<div class="APTFTbyTAP_cascade_column" style="width:'.(100/$options['style_column_number']).'%;float:left;margin:0;">';
+    $output .= '<div class="APTFTbyTAP_cascade_column_inner" style="display:block;margin:0 3px;overflow:hidden;">';
     for($i = $col;$i<$options['tumblr_photo_number'];$i+=$options['style_column_number']){
-      if( $options['tumblr_image_link'] ){ $output .= '<a href="' . $APTFTbyTAP_linkurl[$i] . '" class="APTFTbyTAP-vertical-link" target="_blank" title='."'". $APTFTbyTAP_photocap[$i] ."'".'>'; }
-      $output .= '<img id="'.$id.'-tile-'.$i.'" class="APTFTbyTAP-image '.$shadow.' '.$border.' '.$curves.'" src="' . $APTFTbyTAP_photourl[$i] . '" ';
+      if( $options['tumblr_image_link'] ){ $output .= '<a href="' . $APTFTbyTAP_linkurl[$i] . '" class="APTFTbyTAP-cascade-link" target="_blank" title='."'". $APTFTbyTAP_photocap[$i] ."'".'>'; }
+      $output .= '<img id="'.$id.'-tile-'.$i.'" class="APTFTbyTAP-image '.$shadow.' '.$border.' '.$curves.' '.$highlight.'" src="' . $APTFTbyTAP_photourl[$i] . '" ';
       $output .= 'title='."'". $APTFTbyTAP_photocap[$i] ."'".' alt='."'". $APTFTbyTAP_photocap[$i] ."' "; // Careful about caps with ""
-      $output .= 'border="0" hspace="0" vspace="0" />'; // Override the max-width set by theme
+      $output .= 'border="0" hspace="0" vspace="0" style="margin:1px 0 5px 0;padding:0;max-width:100%;"/>'; // Override the max-width set by theme
       if( $options['tumblr_image_link'] ){ $output .= '</a>'; }
     }
-    $output .= '</div>';
+    $output .= '</div></div>';
   }
   
   $output .= '<div class="APTFTbyTAP_breakline"></div>';
@@ -139,7 +147,7 @@ function APTFTbyTAP_display_cascade($id, $options, $source_results){
   if( !$options['widget_disable_credit_link'] ){
     $output .=  $APTFTbyTAP_by_link;    
   }          
-  // Close vertical-parent
+  // Close cascade-parent
   $output .= '</div>';    
 
   $output .= '<div class="APTFTbyTAP_breakline"></div>';
@@ -159,15 +167,21 @@ function APTFTbyTAP_display_cascade($id, $options, $source_results){
   $output .= '</div>';
   $output .= '<div class="APTFTbyTAP_breakline"></div>';
  
-  echo $output;
+  $highlight = APTFTbyTAP_get_option("general_highlight_color");
+  $highlight = ($highlight?$highlight:'#64a2d8');
   
-  echo '<script>
-          jQuery(window).load(function() {
-            if( jQuery().APTFTbyTAPAdjustBordersPlugin ){
-              jQuery("#'.$id.'-cascade-parent").APTFTbyTAPAdjustBordersPlugin();
-            }  
-          });
-        </script>';
+  if( $options['style_shadow'] || $options['style_border'] || $options['style_highlight'] ){
+    $output .= '<script>
+            jQuery(window).load(function() {
+              if(jQuery().APTFTbyTAPAdjustBordersPlugin ){
+                jQuery("#'.$id.'-cascade-parent").APTFTbyTAPAdjustBordersPlugin({
+                  highlight:"'.$highlight.'",
+                });
+              }  
+            });
+          </script>';
+  }
+  return $output;  
 }
 
 
@@ -248,13 +262,23 @@ function APTFTbyTAP_display_hidden($id, $options, $source_results){
 
   // Close container
   $output .= '</div>';
- 
-  echo $output;
+  $disable = APTFTbyTAP_get_option('general_loader');
+  $highlight = APTFTbyTAP_get_option("general_highlight_color");
+  $highlight = ($highlight?$highlight:'#64a2d8');
   
-  echo '<script>
-        jQuery(window).load(function() {
-          if( jQuery().APTFTbyTAPDisplayPlugin ){
-            jQuery("#'.$id.'-hidden-parent").APTFTbyTAPDisplayPlugin({
+  $output .= '<script>';
+  
+  if(!$disable){
+    $output .= '
+           jQuery(document).ready(function() {
+            jQuery("#'.$id.'-APTFTbyTAP_container").addClass("loading"); 
+           });';
+  }
+  $output .= '
+         jQuery(window).load(function() {
+          jQuery("#'.$id.'-APTFTbyTAP_container").removeClass("loading");
+          if( jQuery().APTFTbyTAPTilesPlugin ){
+            jQuery("#'.$id.'-hidden-parent").APTFTbyTAPTilesPlugin({
               style:"'.($options['style_option']?$options['style_option']:'windows').'",
               shape:"'.($options['style_shape']?$options['style_shape']:'square').'",
               perRow:"'.($options['style_photo_per_row']?$options['style_photo_per_row']:'3').'",
@@ -262,11 +286,15 @@ function APTFTbyTAP_display_hidden($id, $options, $source_results){
               imageBorder:'.($options['style_border']?'1':'0').',
               imageShadow:'.($options['style_shadow']?'1':'0').',
               imageCurve:'.($options['style_curve_corners']?'1':'0').',
+              imageHighlight:'.($options['style_highlight']?'1':'0').',
               galleryHeight:'.($options['style_gallery_height']?$options['style_gallery_height']:'3').',
+              highlight:"'.$highlight.'",
             });
           }
         });
-        </script>';
+      </script>';
+      
+  return $output; 
 }
 
 ?>

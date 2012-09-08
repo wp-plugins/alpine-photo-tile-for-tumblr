@@ -17,10 +17,10 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
   $APTFTbyTAP_tumblr_custom_url = apply_filters( APTFTbyTAP_HOOK, empty($tumblr_options['tumblr_custom_url']) ? 'groupid' : $tumblr_options['tumblr_custom_url'], $tumblr_options );
   $APTFTbyTAP_tumblr_custom_url = @ereg_replace('[[:cntrl:]]', '', $APTFTbyTAP_tumblr_custom_url ); // remove ASCII's control characters
 
-  $key = 'tumblr-'.$tumblr_options['tumblr_source'].'-'.$APTFTbyTAP_tumblr_uid.'-'.$APTFTbyTAP_tumblr_groupid.'-'.$APTFTbyTAP_tumblr_set.'-'.$APTFTbyTAP_tumblr_tags.'-'.$tumblr_options['tumblr_photo_number'].'-'.$tumblr_options['tumblr_photo_size'];
+  $key = 'tumblr-'.$tumblr_options['tumblr_source'].'-'.$APTFTbyTAP_tumblr_uid.'-'.$APTFTbyTAP_tumblr_groupid.'-'.$APTFTbyTAP_tumblr_set.'-'.$APTFTbyTAP_tumblr_tags.'-'.$tumblr_options['tumblr_photo_number'].'-'.$tumblr_options['tumblr_photo_size'].'-'.$tumblr_options['tumblr_display_link'];
 
-  if ( class_exists( 'theAlpinePressSimpleCacheV1' ) && APTFTbyTAP_CACHE ) {
-    $cache = new theAlpinePressSimpleCacheV1();  
+  if ( class_exists( 'theAlpinePressSimpleCacheV2' ) && APTFTbyTAP_CACHE ) {
+    $cache = new theAlpinePressSimpleCacheV2();  
     $cache->setCacheDir( APTFTbyTAP_CACHE );
     
     if( $cache->exists($key) ) {
@@ -114,15 +114,16 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
               if( $i<$tumblr_options['tumblr_photo_number'] ){
                 $sizes = $photo->alt_sizes;
                 $APTFTbyTAP_linkurl[$i] = $post_url;
-                $APTFTbyTAP_photocap[$i] = $post_cap;
+                $APTFTbyTAP_photocap[$i] = ''; //$post_cap;
                 $APTFTbyTAP_photourl[$i] = $sizes[$APTFTbyTAP_size_id]->url;
-                if( !$sizes[5] && $sizes[$APTFTbyTAP_size_id-1]){
-                  $APTFTbyTAP_photourl[$i] = $sizes[$APTFTbyTAP_size_id-1]->url;
-                }
+                
                 $APTFTbyTAP_originalurl[$i] = $sizes[1]->url;
-                if( !$APTFTbyTAP_photourl[$i] ){
-                  $APTFTbyTAP_photourl[$i] = $APTFTbyTAP_originalurl[$i];
+                $APTFTbyTAP_photourl[$i] = $APTFTbyTAP_originalurl[$i];
+                
+                foreach( $sizes as $currentsize ){
+                  
                 }
+
                 $i++;
               }
             }
@@ -365,10 +366,14 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
     
   $results = array('continue'=>$continue,'message'=>$message,'hidden'=>$hidden,'user_link'=>$APTFTbyTAP_user_link,'image_captions'=>$APTFTbyTAP_photocap,'image_urls'=>$APTFTbyTAP_photourl,'image_perms'=>$APTFTbyTAP_linkurl,'image_originals'=>$APTFTbyTAP_originalurl);
   
-  if( true == $continue ){     
+  if( true == $continue && !$disablecache && $cache ){     
     $cache_results = $results;
     if(!is_serialized( $cache_results  )) { $cache_results  = maybe_serialize( $cache_results ); }
     $cache->put($key, $cache_results);
+    $cachetime = APTFFbyTAP_get_option( 'cache_time' );
+    if( $cachetime && is_numeric($cachetime) ){
+      $cache->setExpiryInterval( $cachetime*60*60 );
+    }
   }
   
   return $results;

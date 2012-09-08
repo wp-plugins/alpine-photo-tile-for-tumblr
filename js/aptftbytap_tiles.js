@@ -7,9 +7,9 @@
  */
 
 (function( w, s ) {
-  s.fn.APTFTbyTAPDisplayPlugin = function( options ) {
-
-    options = s.extend( {}, s.fn.APTFTbyTAPDisplayPlugin.options, options );
+  s.fn.APTFTbyTAPTilesPlugin = function( options ) {
+  
+    options = s.extend( {}, s.fn.APTFTbyTAPTilesPlugin.options, options );
   
     return this.each(function() {  
       var parent = s(this);
@@ -239,7 +239,7 @@
           src = img.src;
           url = 'url("'+src+'")';
           perm = allPerms[i];
-
+          
           currentImage = {
             "width":img.naturalWidth,
             "height":img.naturalHeight,
@@ -265,7 +265,7 @@
               }
                             
               url = this.url;
-              perm = this.perm;
+              perm = this.url;
               theClasses = 'APTFTbyTAP-rift APTFTbyTAP-float-'+row;
               theWidth = (normalWidth-4-4/options.perRow);
               theHeight = normalHeight;
@@ -321,6 +321,11 @@
             }
             if(options.imageCurve){
               galleryContainer.addClass('APTFTbyTAP-curve-div');
+            }
+            if(options.imageHighlight && !options.imageBorder){
+              galleryContainer.addClass('APTFTbyTAP-highlight-div');
+              galleryContainer.width( galleryContainer.width()-4 );
+              galleryContainer.height( galleryContainer.height()-4 );
             }
 
           }
@@ -400,6 +405,22 @@
           newDivContainer.width( newDivContainer.width()-10 );
           newDivContainer.height( newDivContainer.height()-10 );
         }
+        if(options.imageHighlight){
+          if(!options.imageBorder){
+            newDivContainer.addClass('APTFTbyTAP-highlight-div');
+            newDivContainer.width( newDivContainer.width()-4 );
+            newDivContainer.height( newDivContainer.height()-4 );
+          }
+          newDivContainer.hover(function(){
+            s(this).css({
+              "background": options.highlight,
+            });
+          },function(){
+            s(this).css({
+              "background-color": "#fff",
+            });
+          });
+        }
         if(options.imageShadow){
           newDivContainer.addClass('APTFTbyTAP-shadow-div');
         }
@@ -418,7 +439,7 @@
     });
   }
   
-  s.fn.APTFTbyTAPDisplayPlugin.options = {
+  s.fn.APTFTbyTAPTilesPlugin.options = {
     backgroundClass: 'northbynorth_background',
     parentID: 'parent'
   }    
@@ -441,7 +462,9 @@
           currentImg.removeClass('APTFTbyTAP-img-border');
           currentImg.css({
             'max-width':(width)+'px',
-            'padding':'5px',
+            'padding':'4px',
+            "margin-left": "1px",
+            "margin-right": "1px",
           });
         }else if( currentImg.hasClass('APTFTbyTAP-img-noborder') ){
           currentImg.removeClass('APTFTbyTAP-img-noborder');
@@ -452,13 +475,12 @@
         }
         
         if( currentImg.hasClass('APTFTbyTAP-img-shadow') ){
-          width -= 8;
+          width -= 2;
           currentImg.removeClass('APTFTbyTAP-img-shadow');
           currentImg.css({
             "box-shadow": "0 1px 3px rgba(34, 25, 25, 0.4)",
-            "margin-left": "4px",
-            "margin-right": "4px",
-            "margin-bottom": "9px",
+            "margin-left": "1px",
+            "margin-right": "1px",
             'max-width':(width)+'px',
           });
         }else if( currentImg.hasClass('APTFTbyTAP-img-noshadow') ){
@@ -466,11 +488,33 @@
           currentImg.css({
             'max-width':(width)+'px',
             "box-shadow":"none",
-            "margin-left": 0,
-            "margin-right": 0
           });
         }
         
+        if( currentImg.hasClass('APTFTbyTAP-img-highlight') ){
+          currentImg.removeClass('APTFTbyTAP-img-highlight');
+          
+          if( '4px' != currentImg.css('padding-right') ){
+            width -= 6;
+            currentImg.css({
+              'max-width':(width)+'px',
+              'padding':'2px',
+              "margin-left": "1px",
+              "margin-right": "1px",
+            });
+          }
+
+          currentImg.hover(function(){
+            console.log(options.highlight);
+            s(this).css({
+              "background-color": options.highlight,
+            });
+          },function(){
+            s(this).css({
+              "background-color": "#fff",
+            });
+          });
+        }
       });
     });
   }

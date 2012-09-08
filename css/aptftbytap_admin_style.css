@@ -1,7 +1,38 @@
-
+  .icon-alpine{
+    background-image:url('images/Pine-Trees.png');
+    box-shadow: 0 0 2px #999999;
+    border-radius: 3px 3px 3px 3px;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+  }
   .APTFTbyTAP-tumblr {
     width:100%;
     overflow:hidden;
+  }
+  .APTFTbyTAP-tumblr.generator, .APTFTbyTAP-tumblr.plugin-settings{
+    max-width:700px;
+    margin:20px 0;
+  }
+  .APTFTbyTAP-tumblr .help-link{
+    width:100%;
+    clear:both;
+    padding:5px 0;
+    margin: 20px 0 0 0;
+  }
+  .APTFTbyTAP-tumblr.plugin-settings .title{
+    width:25%;
+    max-width: 180px;
+    min-width: 100px;
+    display:inline-block;
+    margin: 0 10px 0 0;
+    font-size:1.1em;
+  }
+  .APTFTbyTAP-tumblr.plugin-settings h4{
+    font-size:1.17em;
+  }
+  .APTFTbyTAP-tumblr.plugin-settings  input[type="text"]{
+    width:100px;
   }
   .APTFTbyTAP-tumblr .form-table{
     margin:0;
@@ -55,12 +86,12 @@
     clear:left;
   }  
   .APTFTbyTAP-tumblr .left input[type="text"]{
-    width:100%;
+    width:95%;
   }
-  .APTFTbyTAP-tumblr .right input[type="text"]{
+  .APTFTbyTAP-tumblr .right input[type="text"] {
     width:30%;
-  }
-  .APTFTbyTAP-tumblr .bottom input[type="text"] {
+  }  
+  .APTFTbyTAP-tumblr .bottom input[type="text"]{
     width:20%;
   }
   .APTFTbyTAP-tumblr .bottom{

@@ -1,15 +1,15 @@
 === Alpine PhotoTile for Tumblr ===
 Contributors: theAlpinePress
 Donate link: thealpinepress.com
-Tags: photos, tumblr, photostream, javascript, jQuery, stylish, pictures, images, widget, sidebar, display, gallery
+Tags: photos, tumblr, photostream, javascript, jQuery, stylish, pictures, images, widget, sidebar, display, gallery, wall
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.0.2.3
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description == 
-The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
+The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr2 user or custom Tumblr2 URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr2/ "Plugin Demo").
 
 
 == Installation ==
@@ -34,6 +34,9 @@ None yet, but I'd like to hear from you. Leave a message at http://thealpinepres
 
 = 1.0.2 =
 * Fixed AJAX menu plugin loading problem
+
+= 1.0.3 =
+* Rebuilt photo retrieval method using Tumblr API
 * Changed "per row" and "image number" options
 * Added int high and low to sanitization function
 * Repaired photo linking issue with rift and bookshelf styles
@@ -42,7 +45,15 @@ None yet, but I'd like to hear from you. Leave a message at http://thealpinepres
 * Custom display link (and removed display link option from Community source option)
 * Added "wall" style
 
-= 1.0.2.1 =
+= 1.0.3.1 =
 * Added function and class check before call
-* Enqueue JS and CSS only when widget in sidebar
-* Fix Tumblr API V2 size error
+
+= 1.1.1 =
+* Cache filter for .info and .cache (V2)
+* Load styles and scripts to widget.php only
+* Added options page and shortcode generator
+* Added highlight, highlight color option, cache option, and cache time
+* Made option callbacks plugin specific (not global names)
+* Edited style layouts
+* Fixed url generation for set links
+* Enqueue JS and CSS on pages containing widget or shortcode only
