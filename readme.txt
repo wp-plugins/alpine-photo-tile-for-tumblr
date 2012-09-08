@@ -9,7 +9,7 @@ License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description == 
-The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr2 user or custom Tumblr2 URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr2/ "Plugin Demo").
+The Alpine PhotoTile for Tumblr is one plugin in a series that creates a way of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
 
 
 == Installation ==
