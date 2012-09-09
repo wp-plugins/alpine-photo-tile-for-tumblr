@@ -138,7 +138,7 @@
         'type' => 'checkbox',
         'description' => '',
         'since' => '1.1',
-        'default' => true
+        'default' => ''
       ),
       'tumblr_display_link' => array(
         'name' => 'tumblr_display_link',

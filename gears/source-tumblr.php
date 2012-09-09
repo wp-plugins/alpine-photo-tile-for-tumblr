@@ -78,7 +78,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
       $tumblr_uid = apply_filters( APTFTbyTAP_HOOK, empty($tumblr_options['tumblr_custom_url']) ? '' : $tumblr_options['tumblr_custom_url'], $tumblr_options );
       $tumblr_uid = str_replace(array('/',' '),'',$tumblr_uid);
       $tumblr_uid = str_replace('http:','',$tumblr_uid );
-      $request = 'http://api.tumblr.com/v2/blog/'.$tumblr_uid.'posts?api_key=GhKB8A19ZFhO3rWpBhjKfJUistNDgQwIYu6tHlzzg4pPT3WZwH';
+      $request = 'http://api.tumblr.com/v2/blog/'.$tumblr_uid.'/posts?api_key=GhKB8A19ZFhO3rWpBhjKfJUistNDgQwIYu6tHlzzg4pPT3WZwH';
     break;
     } 
 
@@ -308,6 +308,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
           if( $s<$tumblr_options['tumblr_photo_number'] ){
             $APTFTbyTAP_linkurl[$s] = $item['child']['']['link']['0']['data'];    
             $content = $item['child']['']['description']['0']['data'];     
+            
             if($content){
               // For Reference: regex references and http://php.net/manual/en/function.preg-match.php
               // Using the RSS feed will require some manipulation to get the image url from tumblr;
@@ -317,13 +318,15 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
               if($matches[ 0 ]){
                 // Next, strip away everything surrounding the source url.
                 // . means any expression and + means repeat previous
+                
                 $APTFTbyTAP_photourl_current = @preg_replace(array('/(.+)src="/i','/"(.+)/') , '',$matches[ 0 ]);
+  
                 // Finally, change the size. 
                   // [] specifies single character and \w is any word character
-                $APTFTbyTAP_photourl[$s] = @preg_replace('/[_]500[.]/', "_".$tumblr_options['tumblr_photo_size'].".", $APTFTbyTAP_photourl_current );
+                $APTFTbyTAP_photourl[$s] = $APTFTbyTAP_photourl_current; //@preg_replace('/[_]500[.]/', "_".$tumblr_options['tumblr_photo_size'].".", $APTFTbyTAP_photourl_current );
                 $APTFTbyTAP_originalurl[$s] = $APTFTbyTAP_photourl_current;
                 // Could set the caption as blank instead of default "Photo", but currently not doing so.
-                $APTFTbyTAP_photocap[$s] = $item['child']['']['title']['0']['data'];
+                $APTFTbyTAP_photocap[$s] = '';//$item['child']['']['title']['0']['data'];
                 $s++;
               }
             }
