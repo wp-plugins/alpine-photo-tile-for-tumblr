@@ -17,7 +17,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
   $APTFTbyTAP_tumblr_custom_url = apply_filters( APTFTbyTAP_HOOK, empty($tumblr_options['tumblr_custom_url']) ? 'groupid' : $tumblr_options['tumblr_custom_url'], $tumblr_options );
   $APTFTbyTAP_tumblr_custom_url = @ereg_replace('[[:cntrl:]]', '', $APTFTbyTAP_tumblr_custom_url ); // remove ASCII's control characters
 
-  $key = 'tumblr-'.$tumblr_options['tumblr_source'].'-'.$APTFTbyTAP_tumblr_uid.'-'.$APTFTbyTAP_tumblr_groupid.'-'.$APTFTbyTAP_tumblr_set.'-'.$APTFTbyTAP_tumblr_tags.'-'.$tumblr_options['tumblr_photo_number'].'-'.$tumblr_options['tumblr_photo_size'].'-'.$tumblr_options['tumblr_display_link'];
+  $key = 'tumblr'.APTFTbyTAP_VER.'-'.$tumblr_options['tumblr_source'].'-'.$APTFTbyTAP_tumblr_uid.'-'.$APTFTbyTAP_tumblr_groupid.'-'.$APTFTbyTAP_tumblr_set.'-'.$APTFTbyTAP_tumblr_tags.'-'.$tumblr_options['tumblr_photo_number'].'-'.$tumblr_options['tumblr_photo_size'].'-'.$tumblr_options['tumblr_display_link'];
 
   if ( class_exists( 'theAlpinePressSimpleCacheV2' ) && APTFTbyTAP_CACHE ) {
     $cache = new theAlpinePressSimpleCacheV2();  
@@ -118,10 +118,10 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
                 $APTFTbyTAP_photourl[$i] = $sizes[$APTFTbyTAP_size_id]->url;
                 
                 $APTFTbyTAP_originalurl[$i] = $sizes[1]->url;
-                $APTFTbyTAP_photourl[$i] = $APTFTbyTAP_originalurl[$i];
+                $APTFTbyTAP_photourl[$i] = $sizes[0]->url;
                 
                 foreach( $sizes as $currentsize ){
-                  if( $currentsize->width == $tumblr_options['tumblr_photo_size'] ){
+                  if( $currentsize->width >= $tumblr_options['tumblr_photo_size'] && $currentsize->url ){
                     $APTFTbyTAP_photourl[$i] = $currentsize->url;
                   }
                 }
