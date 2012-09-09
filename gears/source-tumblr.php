@@ -372,7 +372,7 @@ function APTFTbyTAP_photo_retrieval($id, $tumblr_options, $defaults){
     $cache_results = $results;
     if(!is_serialized( $cache_results  )) { $cache_results  = maybe_serialize( $cache_results ); }
     $cache->put($key, $cache_results);
-    $cachetime = APTFFbyTAP_get_option( 'cache_time' );
+    $cachetime = APTFTbyTAP_get_option( 'cache_time' );
     if( $cachetime && is_numeric($cachetime) ){
       $cache->setExpiryInterval( $cachetime*60*60 );
     }

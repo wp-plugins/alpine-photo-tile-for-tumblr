@@ -3,7 +3,7 @@
 Plugin Name: Alpine PhotoTile for Tumblr
 Plugin URI: http://thealpinepress.com/alpine-phototile-for-tumblr/
 Description: The Alpine PhotoTile for Tumblr is the first plugin in a series intended to create a means of retrieving photos from various popular sites and displaying them in a stylish and uniform way. The plugin is capable of retrieving photos from a particular Tumblr user, a group, a set, or the Tumblr community. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like.
-Version: 1.1.1.5
+Version: 1.1.1.6
 Author: the Alpine Press
 Author URI: http://thealpinepress.com/
 License: GNU General Public License v3.0
@@ -34,7 +34,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 define( 'APTFTbyTAP_URL', WP_PLUGIN_URL.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_DIR', WP_PLUGIN_DIR.'/'. basename(dirname(__FILE__)) . '' );
 define( 'APTFTbyTAP_CACHE', WP_CONTENT_DIR . '/cache/' . basename(dirname(__FILE__)) . '' );
-define( 'APTFTbyTAP_VER', '1.1.1.5' );
+define( 'APTFTbyTAP_VER', '1.1.1.6' );
 define( 'APTFTbyTAP_DOMAIN', 'APTFTbyTAP_domain' );
 define( 'APTFTbyTAP_HOOK', 'APTFTbyTAP_hook' );
 define( 'APTFTbyTAP_SETTINGS', basename(dirname(__FILE__)).'-settings' );
