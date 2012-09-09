@@ -92,7 +92,9 @@
  */
   function APTFTbyTAP_enqueue_admin_scripts() {
 
-    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'jquery');
+    wp_enqueue_style( 'farbtastic' );
+    wp_enqueue_script( 'farbtastic' );
     
     wp_enqueue_script('APTFTbyTAP_widget_menu');
     wp_enqueue_style('APTFTbyTAP_admin_css');
