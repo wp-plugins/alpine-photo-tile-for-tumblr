@@ -1,16 +1,23 @@
+/**
+ * Alpine PhotoTile Widget CSS
+ *
+ * @since 0.0.1
+ * @updated 1.2.1
+ */
+
 /* The style of the Display Link below the images */
 /* Global styles for the container and parent class */
-.APTFTbyTAP_container_class{
+.AlpinePhotoTiles_container_class{
   position:relative;
   width:100%;
   display:block;
   overflow:hidden;
 }
-.APTFTbyTAP_container_class img{
+.AlpinePhotoTiles_container_class img{
   margin:0;
   margin-bottom: 4px;
 }
-.APTFTbyTAP_container_class.loading{
+.AlpinePhotoTiles_container_class.loading{
   min-height:200px;
   width:100%;
   background-image:url("images/loader.gif");
@@ -18,8 +25,9 @@
   background-repeat:no-repeat;
   background-size:40px 40px;
   background-color:#fff;
+  border-radius: 3px 3px 3px 3px;
 }
-.APTFTbyTAP_inpost_container {
+.AlpinePhotoTiles_inpost_container {
   padding-bottom:10px;
   display:block;
   clear:both;
@@ -27,21 +35,21 @@
   overflow:hidden;
 }
 
-img.APTFTbyTAP-img-corners{
+img.AlpinePhotoTiles-img-corners{
   border-radius: 3px 3px 3px 3px ! important;
 }
-img.APTFTbyTAP-img-nocorners{
+img.AlpinePhotoTiles-img-nocorners{
   border-radius: 0 0 0 0 ! important;
 }
 
-.APTFTbyTAP_cascade_column{
+.AlpinePhotoTiles_cascade_column{
   margin:0;
   padding:0;
   max-width:100%;
   float:left;
 }
 
-.APTFTbyTAP_breakline{
+.AlpinePhotoTiles_breakline{
   width:100%;
   float:left;
   position:relative;
@@ -50,7 +58,7 @@ img.APTFTbyTAP-img-nocorners{
 }
 
 
-.APTFTbyTAP_parent_class{
+.AlpinePhotoTiles_parent_class{
   position:relative;
   max-width:100%;
   clear:both;
@@ -60,14 +68,15 @@ img.APTFTbyTAP-img-nocorners{
 }
 
 
-.APTFTbyTAP-row{
+.AlpinePhotoTiles-row{
+  max-width:100%;
   position:relative;
   padding: 0 0 4px 0;
   clear:both;
   display:block;
   height:auto;
 }
-.APTFTbyTAP-tile{
+.AlpinePhotoTiles-tile{
   display:block;
   background-size:cover;
   background-repeat:no-repeat;
@@ -75,49 +84,49 @@ img.APTFTbyTAP-img-nocorners{
   margin:0 0 0 4px;
   float:left;
 }
-.APTFTbyTAP-half-tile{
+.AlpinePhotoTiles-half-tile{
   
 }
-.APTFTbyTAP-half-tile-first{
+.AlpinePhotoTiles-half-tile-first{
 
 }
-.APTFTbyTAP-half-tile-last{
+.AlpinePhotoTiles-half-tile-last{
 
 }
 
-.APTFTbyTAP-bookshelf{
+.AlpinePhotoTiles-bookshelf{
   padding: 5px 0;
 }
-.APTFTbyTAP-book{
+.AlpinePhotoTiles-book{
   position:absolute;
   bottom:5px;
   margin:0 0 0 4px;
 }
 
-.APTFTbyTAP-riftline{
+.AlpinePhotoTiles-riftline{
   padding: 0 0 5px 0;
 }
-.APTFTbyTAP-rift{
+.AlpinePhotoTiles-rift{
   position:absolute;
   bottom:5px;
   margin:0 0 0 4px;
 }
-.APTFTbyTAP-rift.APTFTbyTAP-float-0{
+.AlpinePhotoTiles-rift.AlpinePhotoTiles-float-0{
   top:0px;
 }
-.APTFTbyTAP-rift.APTFTbyTAP-float-1{
+.AlpinePhotoTiles-rift.AlpinePhotoTiles-float-1{
   bottom:5px;
 }
 
 
-.APTFTbyTAP-image-div-container{
+.AlpinePhotoTiles-image-div-container{
   overflow:hidden;
 }
-.APTFTbyTAP-gallery-container{
+.AlpinePhotoTiles-gallery-container{
   margin:0 0 0 4px;
 }
 
-.APTFTbyTAP-image-div{
+.AlpinePhotoTiles-image-div{
   display:block;
   background-size:cover;
   background-repeat:no-repeat;
@@ -125,42 +134,42 @@ img.APTFTbyTAP-img-nocorners{
   width:100%;
   height:100%;
 }
-.APTFTbyTAP-link{
+.AlpinePhotoTiles-link{
   width:100%;
   height:100%;
   display:block;
 }
-.APTFTbyTAP-border-div{
+.AlpinePhotoTiles-border-div{
   background: none repeat scroll 0 0 #FFFFFF;
   padding:5px;
 }
-.APTFTbyTAP-highlight-div{
+.AlpinePhotoTiles-highlight-div{
   background: none repeat scroll 0 0 #FFFFFF;
   padding:2px;
 }
 
 
-.APTFTbyTAP-shadow-div{
+.AlpinePhotoTiles-shadow-div{
   box-shadow: 1px 1px 3px rgba(34, 25, 25, 0.4);
 }
-.APTFTbyTAP-curve-div{
+.AlpinePhotoTiles-curve-div{
   border-radius: 3px 3px 3px 3px;
 }
 
 
-.APTFTbyTAP-display-link{
+.AlpinePhotoTiles-display-link{
   width:100%;
   text-align:center;
   /*font-size:10px; */
   margin:3px 0 3px 0;
   position:relative;
 }
-.APTFTbyTAP-image-link{
+.AlpinePhotoTiles-image-link{
   margin:0px;
   border:0px;
   padding:3px 0 3px 0;
 }
-.APTFTbyTAP-display-link-container{
+.AlpinePhotoTiles-display-link-container{
   position:relative;
   clear:both;
   display:block;
@@ -170,7 +179,7 @@ img.APTFTbyTAP-img-nocorners{
 
 
 /* Styles specific to the images of each display style */
-.APTFTbyTAP-vertical-img{
+.AlpinePhotoTiles-vertical-img{
   position:relative;
   width:100%;
   margin:4px 0 0 0;
@@ -178,11 +187,11 @@ img.APTFTbyTAP-img-nocorners{
   border:0;
   outline:0;  
 }
-.APTFTbyTAP-vertical-link{
+.AlpinePhotoTiles-vertical-link{
   line-height:0;
   display:block;
 }
-.APTFTbyTAP-tile-img{
+.AlpinePhotoTiles-tile-img{
   width:100%;
   margin:0;
   padding:0;
@@ -192,7 +201,7 @@ img.APTFTbyTAP-img-nocorners{
 
 
 /* Style for the little corner link to ETH & KU */
-.APTFTbyTAP-by-link{
+.AlpinePhotoTiles-by-link{
   position:absolute;
   bottom:0px;
   left:5px;
@@ -204,11 +213,46 @@ img.APTFTbyTAP-img-nocorners{
   font-size:12px;
   z-index:100;
 }
-.APTFTbyTAP-by-link a{
+.AlpinePhotoTiles-by-link a{
   font-size:8px;
   line-height:8px;
   opacity:0.9;
   filter:alpha(opacity=90);
   COLOR:#C0C0C0;
   text-decoration:none;
+}
+
+.AlpinePhotoTiles-pinterest-container{
+  position:relative;
+  display:block;
+}
+.AlpinePhotoTiles-pin-it-button{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.AlpinePhotoTiles-pinterest-container:hover .AlpinePhotoTiles-pin-it {
+  opacity:1;
+}
+.AlpinePhotoTiles-pin-it{
+  background-image: url('images/pin-it.png');
+  width:43px;
+  height:21px;
+  max-height:50%;
+  max-width:50%;
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+  position:absolute;
+  bottom:18px;
+  right:15px;
+  opacity:0;
+}
+.AlpinePhotoTiles-pin-it.small{
+  bottom:5px;
+  right:7px;
+}
+.AlpinePhotoTiles-pin-it:hover{
+  background-color:rgba(34, 25, 25, 0.6);
+  box-shadow: 0 0 3px rgba(34, 25, 25, 0.6);
 }

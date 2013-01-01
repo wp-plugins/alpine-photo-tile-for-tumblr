@@ -1,59 +1,41 @@
 <?php
-/**
- * Alpine PhotoTile for Tumblr: Widget Setup
- *
- * @since 1.1.1
- *
- */
- 
 
-class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
 
+class Alpine_PhotoTile_for_Tumblr extends WP_Widget { 
+  public $alpinebot;
+  
 	function Alpine_PhotoTile_for_Tumblr() {
-		$widget_ops = array('classname' => 'APTFTbyTAP_widget', 'description' => __('Add images from Tumblr to your sidebar'));
+    $this->alpinebot = new PhotoTileForTumblrBot();
+    $bot = $this->alpinebot;
+		$widget_ops = array('classname' => $bot->name, 'description' => __($bot->desc));
 		$control_ops = array('width' => 550, 'height' => 350);
-		$this->WP_Widget(APTFTbyTAP_DOMAIN, __('Alpine PhotoTile for Tumblr'), $widget_ops, $control_ops);
+		$this->WP_Widget($bot->domain, __($bot->name), $widget_ops, $control_ops);
 	}
   
 	function widget( $args, $options ) {
-		extract($args);
-    wp_enqueue_style('APTFTbyTAP_widget_css');
-    wp_enqueue_script('APTFTbyTAP_tiles');
+    $bot = $this->alpinebot;
     
+		extract($args);
+    if( $options['tumblr_image_link_option'] == "fancybox" ){
+      wp_enqueue_script( 'fancybox' );
+      wp_enqueue_style( 'fancybox-stylesheet' );
+    }
+    wp_enqueue_style($bot->wcss);
+    wp_enqueue_script($bot->wjs);
+
     // Set Important Widget Options    
     $id = $args["widget_id"];
-    $defaults = APTFTbyTAP_option_defaults();
-    
-    $source_results = APTFTbyTAP_photo_retrieval($id, $options, $defaults);
+    $source_results = $bot->photo_retrieval($id, $options);
     
     echo $before_widget . $before_title . $options['widget_title'] . $after_title;
     echo $source_results['hidden'];
     if( $source_results['continue'] ){  
-      switch ($options['style_option']) {
-        case "vertical":
-          echo APTFTbyTAP_display_vertical($id, $options, $source_results);
-        break;
-        case "windows":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break; 
-        case "bookshelf":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break;
-        case "rift":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break;
-        case "floor":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break;
-        case "wall":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break;
-        case "cascade":
-          echo APTFTbyTAP_display_cascade($id, $options, $source_results);
-        break;
-        case "gallery":
-          echo APTFTbyTAP_display_hidden($id, $options, $source_results);
-        break;
+      if( "vertical" == $options['style_option'] ){
+        echo $bot->display_vertical($id, $options, $source_results);
+      }elseif( "cascade" == $options['style_option'] ){
+        echo $bot->display_cascade($id, $options, $source_results);
+      }else{
+        echo $bot->display_hidden($id, $options, $source_results);
       }
     }
     // If user does not have necessary extensions 
@@ -62,31 +44,30 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
       echo 'Sorry:<br>'.$source_results['message'];
     }
     echo $after_widget;
-    
   }
     
 	function update( $newoptions, $oldoptions ) {
-    $optiondetails = APTFTbyTAP_option_defaults();
-    if ( function_exists( 'APTFTbyTAP_MenuOptionsValidate' ) ) {
-      foreach( $newoptions as $id=>$input ){
-        $options[$id] = APTFTbyTAP_MenuOptionsValidate( $input,$oldoptions[$id],$optiondetails[$id] );
-      }
-    }else{
-      $options = $newoptions;
+    $bot = $this->alpinebot;
+    $optiondetails = $bot->option_defaults();
+
+    foreach( $newoptions as $id=>$input ){
+      $options[$id] = $bot->MenuOptionsValidate( $input,$oldoptions[$id],$optiondetails[$id] );
     }
+
     return $options;
 	}
 
 	function form( $options ) {
+    $bot = $this->alpinebot;
 
-    $widget_container = $this->get_field_id( 'APTFTbyTAP-tumblr' ); ?>
+    $widget_container = $this->get_field_id( 'AlpinePhotoTiles-container' ); ?>
 
-    <div id="<?php echo $widget_container ?>" class="APTFTbyTAP-tumblr">
+    <div id="<?php echo $widget_container ?>" class="AlpinePhotoTiles-container <?php echo $bot->domain;?>">
     <?php
-      $defaults = APTFTbyTAP_option_defaults();
-      $positions = APTFTbyTAP_option_positions();
+      $defaults = $bot->option_defaults();
+      $positions = $bot->get_widget_options_by_position();
    
-    if( count($positions) && function_exists( 'APTFTbyTAP_MenuDisplayCallback' ) ){
+    if( count($positions) ){
       foreach( $positions as $position=>$positionsinfo){
       ?>
         <div class="<?php echo $position ?>"> 
@@ -110,7 +91,7 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
                   $hidden = ($option['hidden']?' '.$option['hidden']:'');
                   
                   ?> <tr valign="top"> <td class="<?php echo $class; ?><?php echo $hidden; ?>" <?php echo $trigger; ?>><?php
-                    APTFTbyTAP_MenuDisplayCallback($options,$option,$fieldname,$fieldid);
+                    $bot->MenuDisplayCallback($options,$option,$fieldname,$fieldid);
                   ?> </td></tr> <?php
                 }
               }?>
@@ -122,11 +103,11 @@ class Alpine_PhotoTile_for_Tumblr extends WP_Widget {
     }
     ?>
     </div> 
-    <div><span><?php _e('Need Help? Visit ') ?><a href="<?php echo APTFTbyTAP_INFO; ?>" target="_blank">the Alpine Press</a> <?php _e('for more about this plugin.') ?></span></div> 
-    
+    <div><span><?php _e('Need Help? Visit ') ?><a href="<?php echo $bot->info; ?>" target="_blank">the Alpine Press</a> <?php _e('for more about this plugin.') ?></span></div> 
     <?php
-    
 	}
-}
   
-  ?>
+}
+
+
+?>
