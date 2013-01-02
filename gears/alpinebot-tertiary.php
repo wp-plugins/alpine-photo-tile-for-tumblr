@@ -516,7 +516,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
            jQuery(window).load(function() {
               if(jQuery().AlpineAdjustBordersPlugin ){
                 jQuery("#'.$id.'-vertical-parent").AlpineAdjustBordersPlugin({
-                  highlight:"'.$highlight.'",
+                  highlight:"'.$highlight.'"
                 });
               }  
             });
@@ -631,7 +631,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
            jQuery(window).load(function() {
               if(jQuery().AlpineAdjustBordersPlugin ){
                 jQuery("#'.$id.'-cascade-parent").AlpineAdjustBordersPlugin({
-                  highlight:"'.$highlight.'",
+                  highlight:"'.$highlight.'"
                 });
               }  
             });
