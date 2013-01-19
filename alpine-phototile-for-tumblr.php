@@ -3,7 +3,7 @@
 Plugin Name: Alpine PhotoTile for Tumblr
 Plugin URI: http://thealpinepress.com/alpine-phototile-for-tumblr/
 Description: The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. The photos can be linked to the your Tumblr page, a specific URL, or to a Fancybox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like.
-Version: 1.2.1
+Version: 1.2.3
 Author: the Alpine Press
 Author URI: http://thealpinepress.com/
 License: GNU General Public License v3.0
@@ -57,20 +57,16 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 /**
  * Load Admin JS and CSS
  *  
- * @since 1.0.0
- *
+ * @ Since 1.0.0
+ * @ Updated 1.2.3
  */
 	function APTFTbyTAP_admin_widget_script($hook){ 
     $bot = new PhotoTileForTumblrBot();
     wp_register_script($bot->wmenujs,$bot->url.'/js/'.$bot->wmenujs.'.js','',$bot->ver); 
     wp_register_style($bot->acss,$bot->url.'/css/'.$bot->acss.'.css','',$bot->ver);
     
-    wp_register_script($bot->wjs,$bot->url.'/js/'.$bot->wjs.'.js','',$bot->ver);
-    wp_register_style($bot->wcss,$bot->url.'/css/'.$bot->wcss.'.css','',$bot->ver);  
-    
-    wp_register_script( 'fancybox', $bot->url.'/js/fancybox/jquery.fancybox-1.3.4.pack.js', '', '1.0', true );
-		wp_register_style( 'fancybox-stylesheet', $bot->url . '/js/fancybox/jquery.fancybox-1.3.4.css', false, '1.0', 'screen' );		
-        
+    $bot->register_style_and_script(); // Register widget styles and scripts
+          
     if( 'widgets.php' != $hook ){ return; }
     
     wp_enqueue_script( 'jquery');
@@ -129,18 +125,14 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 /**
  * Load Display JS and CSS
  *  
- * @since 1.0.0
- *
+ * @ Since 1.0.0
+ * @ Updated 1.2.3
  */
   function APTFTbyTAP_enqueue_display_scripts() {
     $bot = new PhotoTileForTumblrBot();
     wp_enqueue_script( 'jquery' );
 
-    wp_register_script($bot->wjs,$bot->url.'/js/'.$bot->wjs.'.js','',$bot->ver);
-    wp_register_style($bot->wcss,$bot->url.'/css/'.$bot->wcss.'.css','',$bot->ver); 
-    
-    wp_register_script( 'fancybox', $bot->url.'/js/fancybox/jquery.fancybox-1.3.4.pack.js', '', '1.0', true );
-		wp_register_style( 'fancybox-stylesheet', $bot->url . '/js/fancybox/jquery.fancybox-1.3.4.css', false, '1.0', 'screen' );		
+    $bot->register_style_and_script(); // Register widget styles and scripts
   }
   add_action('wp_enqueue_scripts', 'APTFTbyTAP_enqueue_display_scripts');
   
