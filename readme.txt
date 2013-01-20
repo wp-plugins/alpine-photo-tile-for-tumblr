@@ -123,3 +123,6 @@ I am a one-man development team and I distribute these plugins for free, so plea
 * Added choice between Fancybox, prettyBox, and ColorBox
 * Added hidden options, including custom rel for lightbox
 * Fixed duplicate "curl" in Tumblr shortcode
+
+= 1.2.3.1 =
+* Fixed cache retrieval
