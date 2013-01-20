@@ -4,20 +4,20 @@ Donate link: thealpinepress.com
 Tags: photos, tumblr, photostream, stylish, pictures, widget, sidebar, gallery, lightbox, fancybox, colorbox, prettybox
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 1.2.3
+Stable tag: 1.2.3.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Stylish and compact plugin for displaying Tumblr images in a sidebar, post, or page. 
 
 == Description == 
-The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. The photos can be linked to the your Tumblr page, a specific URL, or to a Fancybox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
+The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. The photos can be linked to the your Tumblr page, a specific URL, or to a Lightbox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
 
 **Features:**
 
 * Display Tumblr images in a sidebar, post, or page
 * Multiple styles to allow for customization
-* Fancybox/lighbox feature for interactive slideshow
+* Lighbox feature for interactive slideshow (Fancybox, prettyBox, or ColorBox)
 * Simple instructions
 * Widget & shortcode options
 * Feed caching/storage for improved page loading

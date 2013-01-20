@@ -43,7 +43,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
  * The PHP for retrieving content from Tumblr.
  *
  * @ Since 1.0.0
- * @ Updated 1.2.3
+ * @ Updated 1.2.3.1
  */
   function fetch_tumblr_feed($request){
     // No longer write out curl_init and user WP API instead
@@ -89,7 +89,8 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
         $results = @unserialize($results);
         if( count($results) ){
           $results['hidden'] .= '<!-- Retrieved from cache -->';
-          return $results;
+          $this->results = $results; // Remember, Object Oriented
+          return;
         }
       }
     }
