@@ -208,10 +208,10 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
           }
         }
         if(!empty($linkurl) && !empty($photourl)){
-          if( $tumblr_options['tumblr_display_link'] ) {
+          if( $tumblr_options['tumblr_display_link'] && $tumblr_options['tumblr_display_link_text']) {
             $user_link = '<div class="AlpinePhotoTiles-display-link" >';
             $user_link .='<a href="'.$link.'" target="_blank" >';
-            $user_link .= $title;
+            $user_link .= $tumblr_options['tumblr_display_link_text'];
             $user_link .= '</a></div>';
           }
           // If content successfully fetched, generate output...
@@ -288,14 +288,14 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBasic{
         }
         if(!empty($linkurl) && !empty($photourl)){
           // If set, generate tumblr link
-          if( $tumblr_options['display-link'] ) {
+          if( $tumblr_options['tumblr_display_link'] && $tumblr_options['tumblr_display_link_text'] ) {
             $user_link = '<div class="AlpinePhotoTiles-display-link">';
             if( 'custom' == $tumblr_options['tumblr_source'] ){
               $user_link .='<a href="http://' . $tumblr_uid . '/" target="_blank" >';          
             }else{
               $user_link .='<a href="http://' . $tumblr_uid . '.tumblr.com/" target="_blank" >';
             }
-            $user_link .= $_tumblr_xml->tumblelog[title];
+            $user_link .= $tumblr_options['tumblr_display_link_text'];
             $user_link .= '</a></div>';
           }
           // If content successfully fetched, generate output...
