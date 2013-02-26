@@ -609,6 +609,7 @@ class PhotoTileForTumblrBase {
         'name' => 'general_lightbox_params',
         'title' => 'Custom Lightbox Parameters:',
         'type' => 'textarea',
+        'sanitize' => 'css',
         'description' => 'Add custom parameters to the lighbox call.',
         'section' => 'settings',
         'tab' => 'general',
