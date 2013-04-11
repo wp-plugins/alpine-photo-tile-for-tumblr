@@ -1,17 +1,17 @@
 === Alpine PhotoTile for Tumblr ===
 Contributors: theAlpinePress
-Donate link: thealpinepress.com
-Tags: photos, tumblr, photostream, stylish, pictures, widget, sidebar, gallery, lightbox, fancybox, colorbox, prettybox
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=eric%40thealpinepress%2ecom&lc=US&item_name=Alpine%20PhotoTile%20for%20Tumblr%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
+Tags: photos, tumblr, photostream, stylish, pictures, images, widget, sidebar, gallery, lightbox, fancybox, colorbox, prettybox
 Requires at least: 2.8
-Tested up to: 3.5
-Stable tag: 1.2.3.1
+Tested up to: 3.5.1
+Stable tag: 1.2.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Stylish and compact plugin for displaying Tumblr images in a sidebar, post, or page. 
 
 == Description == 
-The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user or custom Tumblr URL. The photos can be linked to the your Tumblr page, a specific URL, or to a Lightbox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
+The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user, custom Tumblr URL, or tag. The photos can be linked to the your Tumblr page, a specific URL, or to a Lightbox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
 
 **Features:**
 
@@ -63,6 +63,7 @@ The plugin caches or stores the Tumblr feed for three hours. If the new photos h
 Yes, as of version 1.2.0, up to 100 photos can be retrieved and displayed.
 
 If you have any more questions, please leave a message at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
+
 I am a one-man development team and I distribute these plugins for free, so please be patient with me.
 
 == Changelog ==
@@ -123,6 +124,31 @@ I am a one-man development team and I distribute these plugins for free, so plea
 * Added choice between Fancybox, prettyBox, and ColorBox
 * Added hidden options, including custom rel for lightbox
 * Fixed duplicate "curl" in Tumblr shortcode
-
+ 
 = 1.2.3.1 =
 * Fixed cache retrieval
+
+= 1.2.4 =
+* Restructured plugin objects and reassinged functions
+* Object oriented message, hidden, etc.
+* Added option to disable right-clicking on images
+* Added updateGlobalOptions and removed individual option calls
+* Added donate button
+* Fixed lightbox param option
+
+= 1.2.5 =
+* Fixed Tumblr feed fetching to account for photosets
+* Add tag option
+* Changed default "Original" Tumblr image size from 500 to 1280px
+* Added fallback to dynamic style and script loading using jQuery
+* Various small fixes
+* Moved cache location
+* Updated ColorBox plugin
+* Set Object params to private and implemeted set, check, and get function
+* Implemeted do_alpine_method call
+* Created active options and results functions
+
+= TODO =
+* Add caption to display
+* Rebuild jQuery display
+* Check with Contact Form 7
