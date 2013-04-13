@@ -220,4 +220,5 @@ Copyright 2013  Eric Burger
     return $links;  
   }  
   add_filter( 'plugin_row_meta', 'APTFTbyTAP_plugin_meta_links', 10, 2 );  
-?>
+
+  ?>
