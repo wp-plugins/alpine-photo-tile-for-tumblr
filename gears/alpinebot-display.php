@@ -519,6 +519,9 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
       case 100:
         $this->set_active_option('size_id',4);
       break;
+      case 240:
+        $this->set_active_option('size_id',3);
+      break;  
       case 250:
         $this->set_active_option('size_id',3);
       break;
@@ -587,8 +590,8 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
                   $photoset = $p->{'photoset'};
                   if( isset( $photoset->{'photo'} ) ){
                     foreach( $photoset->{'photo'} as $each ){
-                      $the_photo['image_source'] = isset($each->{'photo-url'}[$size_id])?(string) $each->{'photo-url'}[$size_id]:(isset($p->{'photo-url'}[0])?(string) $p->{'photo-url'}[0]:'');
-                      $the_photo['image_original'] = isset($each->{'photo-url'}[0])?(string) $each->{'photo-url'}[0]:(isset($p->{'photo-url'}[1])?(string) $p->{'photo-url'}[1]:'');
+                      $the_photo['image_source'] = isset($each->{'photo-url'}[$size_id])?(string) $each->{'photo-url'}[$size_id]:(isset($each->{'photo-url'}[0])?(string) $each->{'photo-url'}[0]:'');
+                      $the_photo['image_original'] = isset($each->{'photo-url'}[0])?(string) $each->{'photo-url'}[0]:(isset($each->{'photo-url'}[1])?(string) $each->{'photo-url'}[1]:$the_photo['image_source']);
                       $this->push_photo( $the_photo );
                       $s++;
                     }
@@ -688,7 +691,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
                 // list of photo urls
                 $the_photo['image_source'] = isset($p[$size_id])?(string) $p[$size_id]:(isset($p['photo-url-500'])?(string) $p['photo-url-500']:(isset($p['photo-url-400'])?(string) $p['photo-url-400']:''));
 
-                $the_photo['image_original'] = isset($p['photo-url-1280'])?(string) $p['photo-url-1280']:(isset($p['photo-url-500'])?(string) $p['photo-url-500']:(isset($p['photo-url-400'])?(string) $p['photo-url-400']:''));
+                $the_photo['image_original'] = isset($p['photo-url-1280'])?(string) $p['photo-url-1280']:(isset($p['photo-url-500'])?(string) $p['photo-url-500']:(isset($p['photo-url-400'])?(string) $p['photo-url-400']:$the_photo['image_source']));
 
                 //$the_photo['image_title'] = isset($p['slug'])?(string) $p['slug']:'';
                 $the_photo['image_title'] = isset($p['photo-caption'])?(string) $p['photo-caption']:'';
@@ -698,8 +701,8 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
                 // Handle posts with multiple photos (photoset)
                 if( isset( $p['photos'] ) && count($p['photos'])>1 ){
                   foreach( $p['photos'] as $each ){
-                    $the_photo['image_source'] = isset($each[$size_id])?(string) $each[$size_id]:(isset($p['photo-url-500'])?(string) $p['photo-url-500']:(isset($p['photo-url-400'])?(string) $p['photo-url-400']:''));
-                    $the_photo['image_original'] = isset($p['photo-url-1280'])?(string) $p['photo-url-1280']:(isset($p['photo-url-500'])?(string) $p['photo-url-500']:(isset($p['photo-url-400'])?(string) $p['photo-url-400']:''));
+                    $the_photo['image_source'] = isset($each[$size_id])?(string) $each[$size_id]:(isset($each['photo-url-500'])?(string) $each['photo-url-500']:(isset($each['photo-url-400'])?(string) $each['photo-url-400']:''));
+                    $the_photo['image_original'] = isset($each['photo-url-1280'])?(string) $each['photo-url-1280']:(isset($each['photo-url-500'])?(string) $each['photo-url-500']:(isset($each['photo-url-400'])?(string) $each['photo-url-400']:$the_photo['image_source']));
                     $this->push_photo( $the_photo );
                     $s++;
                   }
