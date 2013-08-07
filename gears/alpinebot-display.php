@@ -541,7 +541,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
  *  Function for making Tumblr request with API v1
  *  
  *  @ Since 1.2.4
- *  @ Updated 1.2.5
+ *  @ Updated 1.2.6
  */
   function try_simplexml(){
   
@@ -582,7 +582,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
                 
                 //$the_photo['image_title'] = isset($p['slug'])?(string) $p['slug']:'';
                 $the_photo['image_title'] = isset($p->{'photo-caption'})?(string) $p->{'photo-caption'}:'';
-                $the_photo['image_title'] = str_replace("'",'',$the_photo['image_title']);
+                $the_photo['image_title'] = str_replace(array("'","\r\n", "\r","\n"),'',$the_photo['image_title']);
                 $the_photo['image_caption'] = '';
                 
                 // Handle posts with multiple photos (photoset)
@@ -654,7 +654,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
  *  Function for making Tumblr request with API v1 with JSON
  *  
  *  @ Since 1.2.4
- *  @ Updated 1.2.5
+ *  @ Updated 1.2.6
  */
   function try_json(){
     $request = $this->get_tumblr_request('jsonv1');
@@ -695,7 +695,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
 
                 //$the_photo['image_title'] = isset($p['slug'])?(string) $p['slug']:'';
                 $the_photo['image_title'] = isset($p['photo-caption'])?(string) $p['photo-caption']:'';
-                $the_photo['image_title'] = str_replace("'",'',$the_photo['image_title']);
+                $the_photo['image_title'] = str_replace(array("'","\r\n", "\r","\n"),'',$the_photo['image_title']);
                 $the_photo['image_caption'] = '';
                 
                 // Handle posts with multiple photos (photoset)
@@ -746,6 +746,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
  *  Function for making Tumblr request with API v2 with JSON
  *  
  *  @ Since 1.2.5
+ *  @ Updated 1.2.6
  */
   function try_json_v2(){
     $request = $this->get_tumblr_request('jsonv2');
@@ -778,6 +779,7 @@ class PhotoTileForTumblrBotTertiary extends PhotoTileForTumblrBotSecondary{
 
                 $the_photo['image_link'] = isset($p['post_url'])?(string) $p['post_url']:'';
                 $the_photo['image_title'] = isset($p['slug'])?(string) $p['slug']:'';
+                $the_photo['image_title'] = str_replace(array("'","\r\n", "\r","\n"),'',$the_photo['image_title']);
                 $the_photo['image_caption'] = '';
 
                 if( !empty($p['photos']) ){
@@ -889,30 +891,31 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
     $this->add_lightbox_call();
     
     if( !empty($opts['style_shadow']) || !empty($opts['style_border']) || !empty($opts['style_highlight'])  ){
-      $this->add("<script>
-                   jQuery(window).load(function() {
-                      if(jQuery().AlpineAdjustBordersPlugin ){
-                        jQuery('#".$this->get_private('wid')."-vertical-parent').AlpineAdjustBordersPlugin({
-                          highlight:'".$highlight."'
-                        });
-                      }else{
-                        var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
-                        jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
-                          if (document.createStyleSheet){
-                              document.createStyleSheet(css);
-                          }
-                          else {
-                              jQuery('head').append(jQuery('<link rel=\'stylesheet\' href=\''+css+'\' type=\'text/css\' media=\'screen\' />'));
-                          }
-                          if(jQuery().AlpineAdjustBordersPlugin ){
-                            jQuery('#".$this->get_private('wid')."-vertical-parent').AlpineAdjustBordersPlugin({
-                              highlight:'".$highlight."'
-                            });
-                          } 
-                        });
-                      }
-                    });
-                  </script>");  
+      $this->add("
+<script>
+  jQuery(window).load(function() {
+    if( jQuery().AlpineAdjustBordersPlugin ){
+      jQuery('#".$this->get_private('wid')."-vertical-parent').AlpineAdjustBordersPlugin({
+        highlight:'".$highlight."'
+      });
+    }else{
+      var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
+      var link = jQuery(document.createElement('link')).attr({'rel':'stylesheet','href':css,'type':'text/css','media':'screen'});
+      jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
+        if(document.createStyleSheet){
+          document.createStyleSheet(css);
+        }else{
+          jQuery('head').append(link);
+        }
+        if(jQuery().AlpineAdjustBordersPlugin ){
+          jQuery('#".$this->get_private('wid')."-vertical-parent').AlpineAdjustBordersPlugin({
+            highlight:'".$highlight."'
+          });
+        } 
+      });
+    }
+  });
+</script>");  
     }
   }  
 /**
@@ -965,30 +968,31 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
     $this->add_lightbox_call();
     
     if( !empty($opts['style_shadow']) || !empty($opts['style_border']) || !empty($opts['style_highlight'])  ){
-      $this->add("<script>
-                   jQuery(window).load(function() {
-                      if(jQuery().AlpineAdjustBordersPlugin ){
-                        jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
-                          highlight:'".$highlight."'
-                        });
-                      }else{
-                        var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
-                        jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
-                          if (document.createStyleSheet){
-                              document.createStyleSheet(css);
-                          }
-                          else {
-                              jQuery('head').append(jQuery('<link rel=\'stylesheet\' href=\''+css+'\' type=\'text/css\' media=\'screen\' />'));
-                          }
-                          if(jQuery().AlpineAdjustBordersPlugin ){
-                            jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
-                              highlight:'".$highlight."'
-                            });
-                          } 
-                        });
-                      }
-                    });
-                  </script>");  
+      $this->add("
+<script>
+  jQuery(window).load(function() {
+    if(jQuery().AlpineAdjustBordersPlugin ){
+      jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
+        highlight:'".$highlight."'
+      });
+    }else{
+      var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
+      var link = jQuery(document.createElement('link')).attr({'rel':'stylesheet','href':css,'type':'text/css','media':'screen'});
+      jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
+        if(document.createStyleSheet){
+          document.createStyleSheet(css);
+        }else{
+          jQuery('head').append(link);
+        }
+        if(jQuery().AlpineAdjustBordersPlugin ){
+          jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
+            highlight:'".$highlight."'
+          });
+        } 
+      });
+    }
+  });
+</script>");  
     }
   }
 
@@ -1050,77 +1054,71 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
     
     $this->add('<script>');
       if(!$disable){
-        $this->add("
-          jQuery(document).ready(function() {
-            jQuery('#".$wid."-AlpinePhotoTiles_container').addClass('loading'); 
-          });");
+        $this->add(
+"jQuery(document).ready(function() {
+  jQuery('#".$wid."-AlpinePhotoTiles_container').addClass('loading'); 
+});");
       }
-    $this->add("
-          jQuery(window).load(function() {
-            jQuery('#".$wid."-AlpinePhotoTiles_container').removeClass('loading');
-            if( jQuery().AlpinePhotoTilesPlugin ){
-              AlpinePhotoTilesPlugin();
-            }else{
-              var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
-              jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
-                if (document.createStyleSheet){
-                    document.createStyleSheet(css);
-                }
-                else {
-                    jQuery('head').append(jQuery('<link rel=\'stylesheet\' href=\''+css+'\' type=\'text/css\' media=\'screen\' />'));
-                }");
+$this->add("
+jQuery(window).load(function() {
+  jQuery('#".$wid."-AlpinePhotoTiles_container').removeClass('loading');
+  if( jQuery().AlpinePhotoTilesPlugin ){
+    AlpinePhotoTilesPlugin();
+  }else{
+    var css = '".($this->get_private('url').'/css/'.$this->get_private('wcss').'.css')."';
+    var link = jQuery(document.createElement('link')).attr({'rel':'stylesheet','href':css,'type':'text/css','media':'screen'});
+    jQuery.getScript('".($this->get_private('url').'/js/'.$this->get_private('wjs').'.js')."', function(){
+      if(document.createStyleSheet){
+        document.createStyleSheet(css);
+      }else{
+        jQuery('head').append(link);
+      }");
     if( $hasLight ){    
     $check = ($lightbox=='fancybox'?'fancybox':($lightbox=='prettyphoto'?'prettyPhoto':($lightbox=='colorbox'?'colorbox':'fancyboxForAlpine')));    
     $this->add("
-                  if( !jQuery().".$check."){
-                    // Load Lightbox
-                    jQuery.getScript('".$lightScript."', function(){
-                      css = '".$lightStyle."';
-                      if (document.createStyleSheet){
-                          document.createStyleSheet(css);
-                      }
-                      else {
-                          jQuery('head').append(jQuery('<link rel=\'stylesheet\' href=\''+css+'\' type=\'text/css\' media=\'screen\' />'));
-                      }
-                      AlpinePhotoTilesPlugin();
-                    });
-                  }else{
-                    AlpinePhotoTilesPlugin();
-                  }
-              ");
+      if( !jQuery().".$check." ){ // Load Lightbox
+        jQuery.getScript('".$lightScript."', function(){
+          css = '".$lightStyle."';
+          link = jQuery(document.createElement('link')).attr({'rel':'stylesheet','href':css,'type':'text/css','media':'screen'});
+          if(document.createStyleSheet){
+            document.createStyleSheet(css);
+          }else{
+            jQuery('head').append(link);
+          }
+          AlpinePhotoTilesPlugin();
+        });
+      }else{
+        AlpinePhotoTilesPlugin();
+      }");
     }else{
-    $this->add('
-                AlpinePhotoTilesPlugin();
-    ');
+    $this->add('AlpinePhotoTilesPlugin();');
     }
-    
     $this->add("
-              });
-            }
-            
-            function AlpinePhotoTilesPlugin() {
-                jQuery('#".$wid."-hidden-parent').AlpinePhotoTilesPlugin({
-                  id:'".$wid."',
-                  style:'".(isset($opts['style_option'])?$opts['style_option']:'windows')."',
-                  shape:'".(isset($opts['style_shape'])?$opts['style_shape']:'square')."',
-                  perRow:'".(isset($opts['style_photo_per_row'])?$opts['style_photo_per_row']:'3')."',
-                  imageBorder:".(!empty($opts['style_border'])?'1':'0').",
-                  imageShadow:".(!empty($opts['style_shadow'])?'1':'0').",
-                  imageCurve:".(!empty($opts['style_curve_corners'])?'1':'0').",
-                  imageHighlight:".(!empty($opts['style_highlight'])?'1':'0').",
-                  lightbox:".((isset($opts[$src.'_image_link_option']) && $opts[$src.'_image_link_option'] == 'fancybox')?'1':'0').",
-                  galleryHeight:".(isset($opts['style_gallery_height'])?$opts['style_gallery_height']:'0').", // Keep for Compatibility
-                  galRatioWidth:".(isset($opts['style_gallery_ratio_width'])?$opts['style_gallery_ratio_width']:'800').",
-                  galRatioHeight:".(isset($opts['style_gallery_ratio_height'])?$opts['style_gallery_ratio_height']:'600').",
-                  highlight:'".$highlight."',
-                  pinIt:".(!empty($opts['pinterest_pin_it_button'])?'1':'0').",
-                  siteURL:'".get_option( 'siteurl' )."',
-                  callback: ".(!empty($hasLight)?'function(){'.$this->get_lightbox_call().'}':"''")."
-                });
-            }
-          });
-        </script>");      
-  }  
+    }); //Close getScript
+  }
+  function AlpinePhotoTilesPlugin() {
+      jQuery('#".$wid."-hidden-parent').AlpinePhotoTilesPlugin({
+        id:'".$wid."',
+        style:'".(isset($opts['style_option'])?$opts['style_option']:'windows')."',
+        shape:'".(isset($opts['style_shape'])?$opts['style_shape']:'square')."',
+        perRow:".(isset($opts['style_photo_per_row'])?$opts['style_photo_per_row']:'3').",
+        imageBorder:".(!empty($opts['style_border'])?'1':'0').",
+        imageShadow:".(!empty($opts['style_shadow'])?'1':'0').",
+        imageCurve:".(!empty($opts['style_curve_corners'])?'1':'0').",
+        imageHighlight:".(!empty($opts['style_highlight'])?'1':'0').",
+        lightbox:".((isset($opts[$src.'_image_link_option']) && $opts[$src.'_image_link_option'] == 'fancybox')?'1':'0').",
+        galleryHeight:".(isset($opts['style_gallery_height'])?$opts['style_gallery_height']:'0').", // Keep for Compatibility
+        galRatioWidth:".(isset($opts['style_gallery_ratio_width'])?$opts['style_gallery_ratio_width']:'800').",
+        galRatioHeight:".(isset($opts['style_gallery_ratio_height'])?$opts['style_gallery_ratio_height']:'600').",
+        highlight:'".$highlight."',
+        pinIt:".(!empty($opts['pinterest_pin_it_button'])?'1':'0').",
+        siteURL:'".get_option( 'siteurl' )."',
+        callback: ".(!empty($hasLight)?'function(){'.$this->get_lightbox_call().'}':"''")."
+      });
+  }
+}); //Close load
+</script>");      
+  } 
 /**
  *  Update photo number count
  *  
@@ -1205,6 +1203,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
  *  Get Image Link
  *  
  *  @ Since 1.2.2
+ *  @ Updated 1.2.6
  */
   function get_link($i){
     $src = $this->get_private('src');
@@ -1223,7 +1222,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
       $this->add('<a href="' . $linkurl . '" class="AlpinePhotoTiles-link" target="_blank" title='."'". $phototitle ."'".' alt='."'". $phototitle ."'".'>');
       return true;
     }elseif( 'link' == $link && !empty($url) ){
-      $this->add('<a href="' . $url . '" class="AlpinePhotoTiles-link" target="_blank" title='."'". $phototitle ."'".' alt='."'". $phototitle ."'".'>'); 
+      $this->add('<a href="' . $url . '" class="AlpinePhotoTiles-link" title='."'". $phototitle ."'".' alt='."'". $phototitle ."'".'>'); 
       return true;
     }elseif( 'fancybox' == $link && !empty($originalurl) ){
       $light = $this->get_option( 'general_lightbox' );
@@ -1278,24 +1277,25 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
       $lightScript = $this->get_script( $lightbox );
       $lightStyle = $this->get_style( $lightbox );
       if( !empty($lightScript) && !empty($lightStyle) ){
-        $this->add("<script>
-                      jQuery(window).load(function() {
-                        if( !jQuery().".$check."  ){
-                          var css = '".$lightStyle."';
-                          jQuery.getScript('".($lightScript)."', function(){
-                            if (document.createStyleSheet){
-                                document.createStyleSheet(css);
-                            }
-                            else {
-                                jQuery('head').append(jQuery('<link rel=\'stylesheet\' href=\''+css+'\' type=\'text/css\' media=\'screen\' />'));
-                            }
-                            ".$this->get_lightbox_call()."
-                          });  
-                        }else{
-                          ".$this->get_lightbox_call()."
-                        }                          
-                      });
-                    </script>");
+        $this->add("
+<script>
+  jQuery(window).load(function() {
+    if( !jQuery().".$check." ){
+      var css = '".$lightStyle."';
+      var link = jQuery(document.createElement('link')).attr({'rel':'stylesheet','href':css,'type':'text/css','media':'screen'});
+      jQuery.getScript('".($lightScript)."', function(){
+        if(document.createStyleSheet){
+          document.createStyleSheet(css);
+        }else{
+          jQuery('head').append(link);
+        }
+        ".$this->get_lightbox_call()."
+      });
+    }else{
+      ".$this->get_lightbox_call()."
+    }
+  });
+</script>");
       }
     } 
   }

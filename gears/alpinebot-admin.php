@@ -447,7 +447,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
  *  Function for displaying forms in the admin page
  *  
  *  @ Since 1.0.0
- *  @ Updated 1.2.5 
+ *  @ Updated 1.2.6
  */
   function AdminDisplayCallback($options,$option,$fieldname,$fieldid){
     $default = (isset($option['default'])?$option['default']:'');
@@ -469,7 +469,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
     else if ( 'radio' == $fieldtype ) {
       $valid_options = array();
       $valid_options = $option['valid_options'];
-      ?><label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label><?php
+      ?><div class="title"><label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label></div><?php
       foreach ( $valid_options as $valid_option ) {
         ?>
         <input type="radio" name="<?php echo $fieldname; ?>" <?php checked( $valid_option['name'] == $value ); ?> value="<?php echo $valid_option['name']; ?>" />
@@ -482,7 +482,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
       $valid_options = array();
       $valid_options = $option['valid_options']; 
       ?>
-      <label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label>
+      <div class="title"><label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label></div>
         <select id="<?php echo $fieldid ?>" name="<?php echo $fieldname; ?>" >
         <?php 
         foreach ( $valid_options as $valid_option ) {
@@ -497,7 +497,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
     } // Output select form field markup
     else if ( 'range' == $fieldtype ) {     
       ?>
-      <label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label>
+      <div class="title"><label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label></div>
         <select id="<?php echo $fieldid ?>" name="<?php echo $fieldname; ?>" >
         <?php 
         for($i = $option['min'];$i <= $option['max']; $i++){
@@ -520,7 +520,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
     } 
     else if ( 'textarea' == $fieldtype ) {
       ?>
-      <label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label>
+      <div class="title"><label for="<?php echo $fieldid; ?>"><?php echo $optiontitle ?></label></div>
       <textarea id="<?php echo $fieldid ?>" name="<?php echo $fieldname; ?>" class="AlpinePhotoTiles_textarea" ><?php echo $value; ?></textarea><br>
       <span class="admin-description"><?php echo (function_exists('esc_textarea')?esc_textarea( $optiondescription ):$optiondescription); ?></span>
       <?php
@@ -542,7 +542,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
  * Options Validate Pseudo-Callback
  *
  * @ Since 1.0.0
- * @ Updated 1.2.3
+ * @ Updated 1.2.6
  */
   function MenuOptionsValidate( $newinput, $oldinput, $optiondetails ) {
       $valid_input = $oldinput;
@@ -606,7 +606,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
           }
         }
         // Check if numeric
-        if ( 'numeric' == $sanatize && is_numeric( wp_filter_nohtml_kses( $newinput ) ) ) {
+        elseif ( 'numeric' == $sanatize && is_numeric( wp_filter_nohtml_kses( $newinput ) ) ) {
           // Pass input data through the wp_filter_nohtml_kses filter
           $valid_input = wp_filter_nohtml_kses( $newinput );
           if( isset($optiondetails['min']) && $valid_input<$optiondetails['min']){
@@ -616,7 +616,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
             $valid_input = $optiondetails['max'];
           }
         }
-        if ( 'int' == $sanatize && is_numeric( wp_filter_nohtml_kses( $newinput ) ) ) {
+        elseif ( 'int' == $sanatize && is_numeric( wp_filter_nohtml_kses( $newinput ) ) ) {
           // Pass input data through the wp_filter_nohtml_kses filter
           $valid_input = round( wp_filter_nohtml_kses( $newinput ) );
           if( isset($optiondetails['min']) && $valid_input<$optiondetails['min']){
@@ -626,30 +626,34 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
             $valid_input = $optiondetails['max'];
           }
         }
-        if ( 'tag' == $sanatize ) {
+        elseif ( 'tag' == $sanatize ) {
           // Pass input data through the wp_filter_nohtml_kses filter
           $valid_input = wp_filter_nohtml_kses( $newinput );
           $valid_input = str_replace(' ','-',$valid_input);
         }            
         // Validate no-HTML content
-        if ( 'nohtml' == $sanatize ) {
+        elseif ( 'nohtml' == $sanatize ) {
           // Pass input data through the wp_filter_nohtml_kses filter
           $valid_input = wp_filter_nohtml_kses( $newinput );
           $valid_input = str_replace(' ','',$valid_input);
         }
         // Validate HTML content
-        if ( 'html' == $sanatize ) {
+        elseif ( 'html' == $sanatize ) {
           // Pass input data through the wp_filter_kses filter using allowed post tags
           $valid_input = wp_kses_post($newinput );
         }
         // Validate URL address
-        if( 'url' == $sanatize ){
+        elseif( 'url' == $sanatize ){
           $valid_input = esc_url( $newinput );
         }
-        // Validate URL address
-        if( 'css' == $sanatize ){
+        // Validate CSS
+        elseif( 'css' == $sanatize ){
           $valid_input = wp_htmledit_pre( stripslashes( $newinput ) );
-        }      
+        }     
+        // Just strip slashes
+        elseif( 'stripslashes' == $sanatize ){
+          $valid_input = stripslashes( $newinput );
+        }
       }else if( 'wp-textarea' == $type ){
           // Text area filter
           $valid_input = wp_kses_post( force_balance_tags($newinput) );
@@ -663,7 +667,7 @@ class PhotoTileForTumblrAdminSecondary extends PhotoTileForTumblrPrimary{
         }
       }
       return $valid_input;
-  }    
+  } 
 
 }  
 /** ##############################################################################################################################################

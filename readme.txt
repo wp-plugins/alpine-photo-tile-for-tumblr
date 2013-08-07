@@ -3,8 +3,8 @@ Contributors: theAlpinePress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=eric%40thealpinepress%2ecom&lc=US&item_name=Alpine%20PhotoTile%20for%20Tumblr%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: photos, tumblr, photostream, stylish, pictures, images, widget, sidebar, gallery, lightbox, fancybox, colorbox, prettybox
 Requires at least: 2.8
-Tested up to: 3.5.1
-Stable tag: 1.2.5.1
+Tested up to: 3.6
+Stable tag: 1.2.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -147,6 +147,12 @@ I am a one-man development team and I distribute these plugins for free, so plea
 * Set Object params to private and implemeted set, check, and get function
 * Implemeted do_alpine_method call
 * Created active options and results functions
+
+= 1.2.6 =
+* Fixed jQuery bug (Removed all <> tags from inline scripts)
+* Add stripslashes text sanitization
+* Changed lightbox parameters option from CSS to stripslashes sanitization
+* Add filter to remove "\n" and "\r" from titles
 
 = TODO =
 * Add caption to display

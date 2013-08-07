@@ -13,8 +13,8 @@ class PhotoTileForTumblrPrimary {
   private $dir;
   private $cacheUrl;
   private $cacheDir;
-  private $ver = '1.2.5';
-  private $vers = '1-2-5';
+  private $ver = '1.2.6';
+  private $vers = '1-2-6';
   private $domain = 'APTFTbyTAP_domain';
   private $settings = 'alpine-photo-tile-for-tumblr-settings'; // All lowercase
   private $name = 'Alpine PhotoTile for Tumblr';
@@ -1028,7 +1028,7 @@ class PhotoTileForTumblrPrimary {
         'name' => 'general_lightbox_params',
         'title' => 'Custom Lightbox Parameters:',
         'type' => 'textarea',
-        'sanitize' => 'css',
+        'sanitize' => 'stripslashes',
         'description' => 'Add custom parameters to the lighbox call.',
         'section' => 'settings',
         'tab' => 'general',
