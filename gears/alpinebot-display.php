@@ -854,7 +854,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
  *  Function for printing vertical style
  *  
  *  @ Since 0.0.1
- *  @ Updated 1.2.5
+ *  @ Updated 1.2.6.1
  */
   function display_vertical(){
     $this->set_private('out',''); // Clear any output;
@@ -893,7 +893,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
     if( !empty($opts['style_shadow']) || !empty($opts['style_border']) || !empty($opts['style_highlight'])  ){
       $this->add("
 <script>
-  jQuery(window).load(function() {
+  jQuery(window).on('load',function() {
     if( jQuery().AlpineAdjustBordersPlugin ){
       jQuery('#".$this->get_private('wid')."-vertical-parent').AlpineAdjustBordersPlugin({
         highlight:'".$highlight."'
@@ -922,7 +922,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
  *  Function for printing cascade style
  *  
  *  @ Since 0.0.1
- *  @ Updated 1.2.5
+ *  @ Updated 1.2.6.1
  */
   function display_cascade(){
     $this->set_private('out',''); // Clear any output;
@@ -970,8 +970,8 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
     if( !empty($opts['style_shadow']) || !empty($opts['style_border']) || !empty($opts['style_highlight'])  ){
       $this->add("
 <script>
-  jQuery(window).load(function() {
-    if(jQuery().AlpineAdjustBordersPlugin ){
+  jQuery(window).on('load',function() {
+    if( jQuery().AlpineAdjustBordersPlugin ){
       jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
         highlight:'".$highlight."'
       });
@@ -984,7 +984,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
         }else{
           jQuery('head').append(link);
         }
-        if(jQuery().AlpineAdjustBordersPlugin ){
+        if( jQuery().AlpineAdjustBordersPlugin ){
           jQuery('#".$this->get_private('wid')."-cascade-parent').AlpineAdjustBordersPlugin({
             highlight:'".$highlight."'
           });
@@ -1000,7 +1000,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
  *  Function for printing and initializing JS styles
  *  
  *  @ Since 0.0.1
- *  @ Updated 1.2.5
+ *  @ Updated 1.2.6.1
  */
   function display_hidden(){
     $this->set_private('out',''); // Clear any output;
@@ -1060,7 +1060,7 @@ class PhotoTileForTumblrBot extends PhotoTileForTumblrBotTertiary{
 });");
       }
 $this->add("
-jQuery(window).load(function() {
+jQuery(window).on('load',function() {
   jQuery('#".$wid."-AlpinePhotoTiles_container').removeClass('loading');
   if( jQuery().AlpinePhotoTilesPlugin ){
     AlpinePhotoTilesPlugin();
@@ -1118,7 +1118,7 @@ jQuery(window).load(function() {
   }
 }); //Close load
 </script>");      
-  } 
+  }
 /**
  *  Update photo number count
  *  

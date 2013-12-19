@@ -3,15 +3,15 @@ Contributors: theAlpinePress
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=eric%40thealpinepress%2ecom&lc=US&item_name=Alpine%20PhotoTile%20for%20Tumblr%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: photos, tumblr, photostream, stylish, pictures, images, widget, sidebar, gallery, lightbox, fancybox, colorbox, prettybox
 Requires at least: 2.8
-Tested up to: 3.6
-Stable tag: 1.2.6
+Tested up to: 3.8
+Stable tag: 1.2.6.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Stylish and compact plugin for displaying Tumblr images in a sidebar, post, or page. 
 
 == Description == 
-The Alpine PhotoTile for Tumblr is capable of retrieving photos from a particular Tumblr user, custom Tumblr URL, or tag. The photos can be linked to the your Tumblr page, a specific URL, or to a Lightbox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
+Retrieve photos from a Tumblr user, custom Tumblr URL, or tag with the Alpine PhotoTile for Tumblr. The photos can be linked to the your Tumblr page, a specific URL, or to a Lightbox slideshow. Also, the Shortcode Generator makes it easy to insert the widget into posts without learning any of the code. This lightweight but powerful widget takes advantage of WordPress's built in JQuery scripts to create a sleek presentation that I hope you will like. A full description and demonstration is available at [the Alpine Press](http://thealpinepress.com/alpine-phototile-for-tumblr/ "Plugin Demo").
 
 **Features:**
 
@@ -152,9 +152,16 @@ I am a one-man development team and I distribute these plugins for free, so plea
 * Fixed jQuery bug (Removed all <> tags from inline scripts)
 * Add stripslashes text sanitization
 * Changed lightbox parameters option from CSS to stripslashes sanitization
-* Add filter to remove "\n" and "\r" from titles
+* Add filter to remove "\n" and "\r" from Tumblr titles
+
+= 1.2.6.1  =
+* Check compatibility with WP 3.8
+* Small CSS changes (Padding and hover white background)
+* Replaced deprecated jQuery APIs  ( .load() and .browser )
+* Updated prettyPhoto and ColorBox
 
 = TODO =
+* Change to FancyBox 2
 * Add caption to display
 * Rebuild jQuery display
 * Check with Contact Form 7
