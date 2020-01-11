@@ -8,7 +8,10 @@
  * 
  *  ##########################################################################################
  */
-
+/*
+  forked by.saebashi 
+  added support for php7
+*/
 class PhotoTileForTumblrBotSecondary extends PhotoTileForTumblrPrimary{     
    
 /**
@@ -55,7 +58,8 @@ class PhotoTileForTumblrBotSecondary extends PhotoTileForTumblrPrimary{
  *  @ Since 1.2.2
  */  
   function filter_filename( $name ){
-    $name = @ereg_replace('[[:cntrl:]]', '', $name ); // remove ASCII's control characters
+   // $name = @ereg_replace('[[:cntrl:]]', '', $name ); // remove ASCII's control characters
+   $name =@preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', $name ); //2020-01-11 20:40:02 by.sabebashi
     $bad = array_merge(
       array_map('chr', range(0,31)),
       array("<",">",":",'"',"/","\\","|","?","*"," ",",","\'",".")); 
